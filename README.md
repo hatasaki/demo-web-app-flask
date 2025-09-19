@@ -1,38 +1,7 @@
-# シンプル Flask メモアプリ
+# Azure App PaaS ワークショップ
 
-最小構成で CRUD (Create/Read/Update/Delete) を行えるテキストメモアプリです。学習目的でコードを読みやすく、変更しやすくしています。
-
-## 動作要件
-- Python 3.10+ (3.11 以上推奨)
-
-## セットアップ & 起動
-```bash
-# 仮想環境 (任意)
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
-
-# 依存インストール
-pip install -r requirements.txt
-
-# (初回は自動作成されるため省略可) 明示的にテーブルを作成する場合
-flask --app app.py init-db
-
-# 起動
-python app.py
-# もしくは (開発サーバ)
-flask --app app.py run --debug
-```
-ブラウザで: http://127.0.0.1:5000/
-
-## 背景色の変更方法
-`static/style.css` 冒頭にある `:root { --background-color: #ffffff; }` を編集します。
-例:
-```css
-:root {
-  --background-color: #f0f8ff; /* 薄い水色 */
-}
-```
-保存後、ブラウザをリロードすると反映されます。
+Azure App Service および Container Apps へのアプリデプロイを実施するためのアプリです。
+このアプリは最小構成で CRUD (Create/Read/Update/Delete) を行える Web テキストメモアプリです。学習目的でコードを読みやすく、変更しやすくしています。
 
 ## ワークショップ１: Azure App Service へ Cloud Shell (Bash) からデプロイ
 Azure ポータルの Cloud Shell (Bash) 上で、このリポジトリをそのまま Azure App Service にデプロイする手順です。
@@ -210,7 +179,40 @@ SQLite ファイル `memo.db` はコンテナーのローカルストレージ�
 - 再デプロイ
 などで消える／初期化され得ます。実運用なら外部永続ストレージやマネージド DB へ移行が必要となる点を学習ポイントとして意識してください。
 
+--
+# アプリ情報
 
+## 動作要件
+- Python 3.10+ (3.11 以上推奨)
+
+## セットアップ & 起動
+```bash
+# 仮想環境 (任意)
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+
+# 依存インストール
+pip install -r requirements.txt
+
+# (初回は自動作成されるため省略可) 明示的にテーブルを作成する場合
+flask --app app.py init-db
+
+# 起動
+python app.py
+# もしくは (開発サーバ)
+flask --app app.py run --debug
+```
+ブラウザで: http://127.0.0.1:5000/
+
+## 背景色の変更方法
+`static/style.css` 冒頭にある `:root { --background-color: #ffffff; }` を編集します。
+例:
+```css
+:root {
+  --background-color: #f0f8ff; /* 薄い水色 */
+}
+```
+保存後、ブラウザをリロードすると反映されます。
 
 ## ライセンス
 研修用途サンプル。必要に応じて社内規約に合わせてください。
