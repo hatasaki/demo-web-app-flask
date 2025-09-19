@@ -1,0 +1,73 @@
+/* 背景色は以下のCSSカスタムプロパティ(--background-color)で一括変更可能です。
+   研修参加者はここの値だけを編集してください。例: #f0f8ff, #222, white など */
+:root {
+  --background-color: #ffffff; /* ← デフォルト: 白 */
+  --text-color: #222;
+  --accent-color: #2563eb;
+  --border-color: #ddd;
+  --radius: 6px;
+  --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-stack);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.container { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+
+h1 { font-size: 1.5rem; margin: 0; }
+
+.note-list { list-style: none; padding: 0; margin: 0; }
+.note-list li { border: 1px solid var(--border-color); padding: .75rem .9rem; margin-bottom: .6rem; background: #fff; border-radius: var(--radius); display: flex; justify-content: space-between; gap: .75rem; }
+.note-list li form { margin: 0; }
+.note-text { flex: 1; white-space: pre-wrap; }
+.note-meta { width: 110px; font-size: .65rem; line-height:1.1; display:flex; flex-direction:column; justify-content:flex-start; gap: .25rem; color:#555; }
+.note-meta .created::before { content: 'C:'; font-weight:600; margin-right:.15rem; }
+.note-meta .updated::before { content: 'U:'; font-weight:600; margin-right:.15rem; }
+
+form.inline { display: inline; }
+
+button, .btn {
+  cursor: pointer;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: .5rem .85rem;
+  border-radius: var(--radius);
+  font-size: .85rem;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .btn:hover { filter: brightness(1.05); }
+button.secondary, .btn.secondary { background: #6b7280; }
+button.danger { background: #dc2626; }
+
+.card { border: 1px solid var(--border-color); background: #fff; padding: 1rem 1rem 1.25rem; border-radius: var(--radius); }
+.card h2 { margin-top: 0; font-size: 1.15rem; }
+
+textarea, input[type=text] {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: .55rem .6rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  resize: vertical;
+}
+
+.actions { display: flex; gap: .5rem; }
+footer { margin-top: 2.5rem; font-size: .75rem; text-align: center; color: #666; }
+
+.flash { padding:.5rem .75rem; border-radius:4px; font-size:.85rem; margin-bottom:.4rem; background:#e0f2fe; color:#222; }
+.flash-error { background:#fee2e2; }
+
+.new-note { border:1px solid var(--border-color); background:#fff; padding:1rem 1rem 1.25rem; border-radius: var(--radius); margin-bottom:1.25rem; }
+.new-note textarea { min-height: 130px; }
+.divider { border:0; border-top:2px solid var(--border-color); margin:1.75rem 0 1.25rem; }

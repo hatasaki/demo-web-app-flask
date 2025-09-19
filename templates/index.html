@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}メモ一覧{% endblock %}
+{% block header_actions %}{% endblock %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages" style="margin-bottom:1rem;">
+        {% for category, msg in messages %}
+          <div class="flash flash-{{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="new-note">
+    <form action="{{ url_for('add') }}" method="post">
+      <label for="body" style="display:block;font-size:.85rem;margin-bottom:.25rem;color:#444;">新しいメモ</label>
+      <textarea id="body" name="body" rows="4" placeholder="メモを入力" aria-label="新しいメモ"></textarea>
+      <div style="margin-top:.5rem; display:flex; justify-content:flex-end;">
+        <button type="submit">追加</button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="divider" />
+
+  {% if notes %}
+    <ul class="note-list">
+      {% for n in notes %}
+      <li>
+        <div class="note-meta">
+          <div class="created" title="作成日時">{{ n.created_at[:16] }}</div>
+          <div class="updated" title="更新日時"{% if n.updated_at != n.created_at %}>{% else %} style="opacity:.35"{% endif %}>{{ n.updated_at[:16] }}</div>
+        </div>
+        <div class="note-text">{{ n.body }}</div>
+        <div class="actions">
+          <a class="btn secondary" href="{{ url_for('edit', note_id=n.id) }}">編集</a>
+          <form action="{{ url_for('delete', note_id=n.id) }}" method="post" onsubmit="return confirm('削除しますか?');">
+            <button class="danger" type="submit">削除</button>
+          </form>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="card"><p style="margin:0;">まだメモがありません。</p></div>
+  {% endif %}
+{% endblock %}

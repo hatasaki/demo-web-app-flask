@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}メモ編集{% endblock %}
+{% block content %}
+  <div class="card">
+    <h2>メモ編集</h2>
+    <form method="post">
+      <textarea name="body" rows="6" placeholder="内容を入力">{{ note.body }}</textarea>
+      <div style="margin-top: .75rem; display:flex; gap:.5rem;">
+        <button type="submit">保存</button>
+        <a class="btn secondary" href="{{ url_for('index') }}">戻る</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
