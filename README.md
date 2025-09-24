@@ -48,11 +48,10 @@ az group create --name $RG_NAME --location $LOCATION
 az webapp up \
   --name $APP_NAME \
   --resource-group $RG_NAME \
+  --location $LOCATION \
   --runtime "PYTHON:3.11" \
   --sku S1 \
-  --logs \
-  --os-type linux \
-  --src .
+  --os-type linux
 ```
 
 処理には 1〜3 分ほどかかることがあります。完了すると `https://<APP_NAME>.azurewebsites.net` の URL が表示されます。
@@ -62,7 +61,6 @@ az webapp up \
 - (未存在なら) Web アプリ作成
 - Oryx によるビルド & パッケージング
 - ZIP デプロイ
-- ログ有効化 (`--logs` 指定時)
 
 ### 5. 動作確認
 表示された URL をブラウザで開き、トップページが表示され CRUD が行えるか確認します。
@@ -93,19 +91,27 @@ az webapp deployment slot create \
   --resource-group $RG_NAME \
   --slot staging
 
-# スロットへデプロイ (ソース: 現在ディレクトリ)
-az webapp up \
+# スロットへデプロイ
+# az webapp up はスロット指定 ( --slot ) や --src オプションをサポートしないため、
+# スロットには ZIP デプロイ (az webapp deploy) を利用します。
+zip -r app.zip .
+az webapp deploy \
   --name $APP_NAME \
   --resource-group $RG_NAME \
-  --runtime "PYTHON:3.11" \
-  --sku S1 \
-  --os-type linux \
-  --src . \
-  --slot staging
+  --slot staging \
+  --src-path app.zip \
+  --type zip
 
 # スロット URL 例: https://<APP_NAME>-staging.azurewebsites.net
 # 既定 (本番) と staging で背景色が異なることをブラウザで確認
 ```
+
+#### 補足: コマンド修正の背景
+以前 README に記載していた `--src .` は `az webapp up` の有効な引数ではなく、Azure CLI 実行時に `unrecognized arguments: --src .` エラーとなるため削除しました。`az webapp up` は "現在の作業ディレクトリ" を自動で ZIP デプロイ対象として扱うためソース指定は不要です。またデプロイ スロットへの直接デプロイは `az webapp up` では行えないため、スロットには `az webapp deploy --slot <slotName> --src-path <artifact>` を利用する手順に変更しました。
+
+参照 (Microsoft Docs):
+- az webapp up: https://learn.microsoft.com/cli/azure/webapp#az-webapp-up
+- az webapp deploy: https://learn.microsoft.com/cli/azure/webapp#az-webapp-deploy
 
 ## ワークショップ2: Azure Container Apps へデプロイ
 Azure ポータルで Azure Container Apps にアプリコンテナーデプロイする手順です。
